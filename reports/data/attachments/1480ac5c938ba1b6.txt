@@ -1,0 +1,8 @@
+GET https://dog.ceo/api/breeds/image/random
+
+Headers:
+Accept=*/*
+Content-Type=application/json
+
+Body:
+No body

@@ -1,0 +1,8 @@
+GET https://dog.ceo/api/breed/rEtRiEvEr/images
+
+Headers:
+Accept=*/*
+Content-Type=application/json
+
+Body:
+No body
