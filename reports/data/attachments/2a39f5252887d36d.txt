@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Wed, 29 Oct 2025 23:33:43 GMT
+Content-Type=application/json
+Content-Length=110
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=8jOUgDFU0W7u0fZ5HRXCbPWP1a8GhZxp78UtFAVOSIev3ibp7axmf0D8Q7L3GKWeUEzddM7QDNEONoHHKg6CxXoSePFerDE%3D"}]}
+CF-RAY=99667ac04949d6ac-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/spaniel-welsh\/n02102177_575.jpg","status":"success"}

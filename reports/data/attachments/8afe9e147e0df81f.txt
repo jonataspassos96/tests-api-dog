@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Wed, 29 Oct 2025 23:33:41 GMT
+Content-Type=application/json
+Content-Length=106
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=p2dVUZdjKyz0ae4MXc0p04fPauHXWXQk4rpwJGTtAl%2FX8jB7U5GFnJ1pi2baQ0twX9GDPYcQH2UvqLPgm90o4PeQiOhydF4%3D"}]}
+CF-RAY=99667ab47ef0c98f-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/mudhol-indian\/Indian-Mudhol.jpg","status":"success"}
