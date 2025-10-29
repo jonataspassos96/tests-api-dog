@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Wed, 29 Oct 2025 15:37:31 GMT
+Content-Type=application/json
+Content-Length=121
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=3PXh8ZFVMddJzsClSYnsV%2BZ0wthcxdx08BY%2BOEH8S6rj8MpSb6fhBGbBrioba77x%2F5Mn%2BWhsyFEJuFk0gbDU6EShPt2OsIc%3D"}]}
+CF-RAY=9963c13289038ce9-EWR
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/bullterrier-staffordshire\/n02093256_4245.jpg","status":"success"}
