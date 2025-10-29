@@ -1,0 +1,27 @@
+Status: 404
+
+Headers:
+Date=Wed, 29 Oct 2025 23:46:24 GMT
+Content-Type=application/json
+Transfer-Encoding=chunked
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Access-Control-Allow-Origin=*
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+Cache-Control=max-age=1800
+X-Cache-Age=766
+X-Cache-Hits=1
+X-Cache=HIT
+Age=0
+Vary=
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=pHvLN5EVtNEe9wYkOMggsqOgkOwK7S%2F0gMmF18OE5Fx%2BE45T1v9cP9Z4B%2BCoWB1vXyVWsaoyp3lMfThpnOho%2FYUIla8q"}]}
+Content-Encoding=gzip
+CF-RAY=99668d591aadfa09-MCI
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"status":"error","message":"Breed not found (main breed does not exist)","code":404}
