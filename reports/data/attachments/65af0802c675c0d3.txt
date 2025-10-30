@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Thu, 30 Oct 2025 01:07:05 GMT
+Content-Type=application/json
+Content-Length=112
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=WixpWiR6hsvxG4ExTGQV1jcmWxytShKqONGgiO79INy5%2FXwMTYyPXnpaAvWr7eBI4ehqWW6fmwE%2F5sa%2F3%2BGyhzkVieisdEk%3D"}]}
+CF-RAY=996703877bdf81d9-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/terrier-border\/n02093754_6106.jpg","status":"success"}
