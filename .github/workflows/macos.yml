@@ -1,11 +1,7 @@
 name: CI Pipeline - MacOS
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch: # Permite execução manual
+  workflow_dispatch: # Execução manual apenas
 
 permissions:
   contents: write

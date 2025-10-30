@@ -392,7 +392,7 @@ O projeto implementa uma **arquitetura CI/CD robusta e multi-plataforma** com 4 
 
 ### **2. 🐧 Linux Nativo (`linux.yml`)**
 - **Ambiente:** ubuntu-latest (nativo)
-- **Finalidade:** Testes em ambiente Linux puro
+- **Finalidade:** Testes em ambiente Linux puro (sem deploy)
 - **Triggers:** Manual (`workflow_dispatch`)
 - **Características:**
   - ✅ Execução nativa sem Docker
@@ -402,7 +402,7 @@ O projeto implementa uma **arquitetura CI/CD robusta e multi-plataforma** com 4 
 
 ### **3. 🍎 macOS Nativo (`macos.yml`)**
 - **Ambiente:** macos-latest (nativo)
-- **Finalidade:** Testes em ambiente macOS
+- **Finalidade:** Testes em ambiente macOS (sem deploy)
 - **Triggers:** Manual (`workflow_dispatch`)
 - **Características:**
   - ✅ Integração com Homebrew
@@ -412,7 +412,7 @@ O projeto implementa uma **arquitetura CI/CD robusta e multi-plataforma** com 4 
 
 ### **4. 🪟 Windows Nativo (`windows.yml`)**
 - **Ambiente:** windows-latest (nativo)
-- **Finalidade:** Testes em ambiente Windows
+- **Finalidade:** Testes em ambiente Windows (sem deploy)
 - **Triggers:** Manual (`workflow_dispatch`)
 - **Características:**
   - ✅ Scripts PowerShell nativos
@@ -441,18 +441,23 @@ gh workflow run windows.yml   # Windows nativo
 - **Step Summaries** - Resumos visuais detalhados por plataforma
 - **Artifact Management** - Artifacts específicos por plataforma (30 dias de retenção)
 - **System Analysis** - Análise detalhada do ambiente de execução por plataforma
-- **Conditional Deployment** - Deploy apenas no workflow principal (`ci-cd.yml`)
+
+#### **🎯 Arquitetura de Deploy Centralizada:**
+- **✅ Deploy Único:** Apenas `ci-cd.yml` faz deploy para GitHub Pages
+- **🚫 Conflitos Eliminados:** Workflows nativos SEM deploy (evita conflitos)
+- **📊 GitHub Pages Estável:** URL única `https://jonataspassos96.github.io/tests-api-dog/reports/`
+- **🔒 Sem Interrupções:** Fim dos conflitos de "pages build and deployment"
 
 #### **📦 Artifacts Multi-Plataforma:**
 
 Cada workflow gera artifacts específicos com análises detalhadas:
 
-| Workflow      | Artifact Name          | Conteúdo                                     |
-| ------------- | ---------------------- | -------------------------------------------- |
-| `ci-cd.yml`   | `test-reports`         | Relatórios Allure + Deploy para GitHub Pages |
-| `linux.yml`   | `linux-test-results`   | Relatórios + Análise sistema Linux           |
-| `macos.yml`   | `macos-test-results`   | Relatórios + Análise sistema macOS           |
-| `windows.yml` | `windows-test-results` | Relatórios + Análise sistema Windows         |
+| Workflow      | Artifact Name          | Conteúdo                                          |
+| ------------- | ---------------------- | ------------------------------------------------- |
+| `ci-cd.yml`   | `docker-test-results`  | Relatórios Allure + **Deploy GitHub Pages**       |
+| `linux.yml`   | `linux-test-results`   | Relatórios + Análise sistema Linux (sem deploy)   |
+| `macos.yml`   | `macos-test-results`   | Relatórios + Análise sistema macOS (sem deploy)   |
+| `windows.yml` | `windows-test-results` | Relatórios + Análise sistema Windows (sem deploy) |
 
 **📥 Download de Artifacts:**
 - Acesse: `GitHub Actions → Workflow específico → Run → Artifacts`
@@ -469,37 +474,5 @@ Cada workflow gera artifacts específicos com análises detalhadas:
   - **Linux Nativo:** https://github.com/jonataspassos96/tests-api-dog/actions/workflows/linux.yml
   - **macOS Nativo:** https://github.com/jonataspassos96/tests-api-dog/actions/workflows/macos.yml
   - **Windows Nativo:** https://github.com/jonataspassos96/tests-api-dog/actions/workflows/windows.yml
-
-### **🚀 Execução Rápida**
-```bash
-# Setup completo em um comando
-git clone https://github.com/jonataspassos96/tests-api-dog.git
-cd tests-api-dog && make test-docker
-
-# Visualizar relatório local
-make report
-```
-
-### **🛠️ Para Desenvolvedores**
-```bash
-# Execução local (requer Java 21)
-make test
-
-# Apenas relatórios estáticos
-make report-build
-
-# Testes multi-plataforma via GitHub Actions
-gh workflow run linux.yml    # Linux nativo
-gh workflow run macos.yml    # macOS nativo
-gh workflow run windows.yml  # Windows nativo
-
-# Limpeza
-make clean
-```
-
-### **📋 Comandos CI/CD**
-- **Trigger manual:** GitHub Actions → "CI Pipeline" → "Run workflow"
-- **Auto-deploy:** Push para `main` → Deploy automático GitHub Pages
-- **Pull Request:** Validação automática sem deploy
 
 ---
