@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Thu, 30 Oct 2025 00:21:14 GMT
+Content-Type=application/json
+Content-Length=109
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=4SYos0mNfGvAr5mLWAPeC9SoSD1oDHPMLtTSC7CdmwXn4L8h3s6emUdNo49x6w6Qa2n1PMC1rb%2B7oBHIex2dK53dNXWb%2BMA%3D"}]}
+CF-RAY=9966c05ada13f7db-LAX
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/danish-swedish-farmdog\/ebba_004.jpg","status":"success"}
