@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Wed, 29 Oct 2025 23:51:39 GMT
+Content-Type=application/json
+Content-Length=114
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=hH1GAvWqJKpJ1Y%2FewCBWNH2UC6%2Fp%2FW2WwKvtYNBw7mjrlKPSwwJsVNNDVBD%2FI6q%2FnCvtfO3r1XIXzQqkK8%2Be9cw%2FJcq2OE8%3D"}]}
+CF-RAY=996695051a3bc98d-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/terrier-silky\/n02097658_5643.jpg","status":"success"}

@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Wed, 29 Oct 2025 23:51:32 GMT
+Content-Type=application/json
+Content-Length=109
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=rvXoBP4v0VgUJZUCdpZQsADtNw4zbAEqdKctjQbmOKvopeIv2V8JWfB6wPAe4biPg%2FRLG3IoruqyGGNZ%2F1i0Ksx3D28B"}]}
+CF-RAY=996694da4ab05803-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/maltese\/n02085936_10625.jpg","status":"success"}
