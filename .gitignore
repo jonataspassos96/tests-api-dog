@@ -48,3 +48,6 @@ Thumbs.db
 .allure/
 allure-results/
 allure-report/
+
+# GitHub Copilot Java Upgrade Extension
+.github/java-upgrade/
