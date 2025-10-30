@@ -1,0 +1,205 @@
+name: CI Pipeline - MacOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Permite execução manual
+
+permissions:
+  contents: write
+  actions: read
+  checks: write
+  pull-requests: write
+  pages: write
+  id-token: write
+
+jobs:
+  test-native:
+    runs-on: macos-latest
+    name: macOS Native Test & Report
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup JDK 21 (Native macOS)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        
+    - name: Setup Maven (macOS with Homebrew)
+      run: |
+        echo "🍺 Installing Maven via Homebrew on macOS..."
+        brew install maven
+        
+    - name: Cache Maven dependencies  
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: macos-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          macos-m2-
+      
+    - name: Verify macOS Environment
+      run: |
+        echo "🍎 macOS Environment Information:"
+        echo "📋 OS Info: $(sw_vers)"
+        echo "🖥️  Architecture: $(uname -m)"
+        echo "☕ Java Version:"
+        java -version
+        echo "📦 Maven Version:"
+        mvn --version
+        echo "� Environment Variables:"
+        echo "  JAVA_HOME: $JAVA_HOME"
+        echo "  PATH: $PATH"
+        echo "🍺 Homebrew Info:"
+        brew --version
+        
+    - name: Compile Project (Native macOS)
+      run: |
+        echo "🔨 Compiling project natively on macOS..."
+        mvn clean compile test-compile
+        
+    - name: Run Tests (Native macOS) 
+      run: |
+        echo "🧪 Running tests natively on macOS..."
+        mvn test
+      continue-on-error: true
+      
+    - name: Generate Allure Report (Native macOS)
+      run: |
+        echo "📊 Generating Allure report natively on macOS..."
+        mvn allure:report
+        echo "✅ Native macOS execution completed!"
+      if: always()
+      continue-on-error: true
+      
+    - name: Verify Native macOS execution results
+      run: |
+        echo "📁 Verifying native macOS execution results..."
+        echo "🔍 Checking target directory structure..."
+        
+        if [ -d "target" ]; then
+          echo "✅ Target directory exists"
+          ls -la target/
+          
+          if [ -d "target/surefire-reports" ]; then
+            echo "✅ Surefire reports generated"
+            testFiles=$(find target/surefire-reports -name "*.xml" | wc -l)
+            echo "   Found $testFiles test report files"
+          fi
+          
+          if [ -d "target/allure-results" ]; then
+            echo "✅ Allure results generated"
+            allureFiles=$(ls target/allure-results | wc -l)
+            echo "   Found $allureFiles allure result files"
+          fi
+          
+          if [ -f "target/site/allure-maven-plugin/index.html" ]; then
+            echo "✅ Allure HTML report generated successfully"
+            reportSize=$(stat -f%z target/site/allure-maven-plugin/index.html 2>/dev/null || stat -c%s target/site/allure-maven-plugin/index.html)
+            echo "   Report size: $reportSize bytes"
+          else
+            echo "⚠️ Allure HTML report not found"
+          fi
+        else
+          echo "❌ Target directory not found - Docker execution may have failed"
+        fi
+      if: always()
+      continue-on-error: true
+      
+    - name: macOS Environment Analysis
+      run: |
+        echo "🔧 macOS Environment Analysis:"
+        echo "📊 Disk Usage:"
+        df -h
+        echo "💾 Memory Info:"
+        vm_stat
+        echo "🔍 System Info:"
+        system_profiler SPSoftwareDataType
+        echo "🍎 macOS Version Details:"
+        sw_vers -productVersion
+        if [ -d "target" ]; then
+          echo "✅ Target directory permissions OK (native macOS)"
+        else
+          echo "⚠️ Target directory not found"
+        fi
+      if: always()
+      continue-on-error: true
+      
+    - name: Publish Test Results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: TestNG Results
+        path: target/surefire-reports/TEST-*.xml
+        reporter: java-junit
+        fail-on-error: false
+        
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: macos-test-results
+        path: |
+          target/surefire-reports/
+          target/allure-results/
+          target/site/allure-maven-plugin/
+        retention-days: 30
+        
+    - name: Test Results Summary
+      if: always()
+      run: |
+        echo "## 📊 Test Results Summary" >> $GITHUB_STEP_SUMMARY
+        if [ -f "target/surefire-reports/testng-results.xml" ]; then
+          echo "✅ TestNG results generated" >> $GITHUB_STEP_SUMMARY
+        fi
+        if [ -d "target/allure-results" ]; then
+          echo "✅ Allure results generated" >> $GITHUB_STEP_SUMMARY
+        fi
+        if [ -d "target/site/allure-maven-plugin" ]; then
+          echo "✅ Allure HTML report generated" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📋 **Next Steps:**" >> $GITHUB_STEP_SUMMARY
+        echo "- Check artifacts for detailed reports" >> $GITHUB_STEP_SUMMARY
+        if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          echo "- Allure report will be deployed to GitHub Pages" >> $GITHUB_STEP_SUMMARY
+        fi
+
+  deploy:
+    needs: test-native
+    runs-on: ubuntu-latest
+    name: Deploy Reports
+    if: github.ref == 'refs/heads/main' && always()
+    
+    steps:
+    - name: Download Allure report (macOS)
+      uses: actions/download-artifact@v4
+      with:
+        name: macos-test-results
+        path: test-results
+        
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: hashFiles('test-results/site/allure-maven-plugin/index.html') != ''
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: test-results/site/allure-maven-plugin
+        destination_dir: reports
+        
+    - name: Deploy Summary
+      if: always()
+      run: |
+        echo "## 🚀 Deploy Summary" >> $GITHUB_STEP_SUMMARY
+        if [ -f "test-results/site/allure-maven-plugin/index.html" ]; then
+          echo "✅ Allure report deployed to GitHub Pages" >> $GITHUB_STEP_SUMMARY
+          echo "📊 **View Report:** https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ No Allure report found for deployment" >> $GITHUB_STEP_SUMMARY
+          echo "🔍 **Debug info:** Check 'Debug artifact structure' step above" >> $GITHUB_STEP_SUMMARY
+        fi

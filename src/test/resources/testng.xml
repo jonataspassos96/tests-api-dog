@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Dog API Test Suite" verbose="1">
+    
+    <parameter name="baseUrl" value="https://dog.ceo/api"/>
+    
+    <test name="Dog API Tests">
+        <classes>
+            <class name="dogapi.tests.BreedsListTest"/>
+            <class name="dogapi.tests.BreedImagesTest"/>
+            <class name="dogapi.tests.RandomImageTest"/>
+            <class name="dogapi.tests.IntegrationTest"/>
+        </classes>
+    </test>
+    
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    
+</suite>

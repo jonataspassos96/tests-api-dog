@@ -1,0 +1,204 @@
+name: CI Pipeline - Windows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: # Permite execução manual
+
+permissions:
+  contents: write
+  actions: read
+  checks: write
+  pull-requests: write
+  pages: write
+  id-token: write
+
+jobs:
+  test-native:
+    runs-on: windows-latest
+    name: Windows Native Test & Report
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup JDK 21 (Native Windows)
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        
+    - name: Cache Maven dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: windows-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          windows-m2-
+      
+    - name: Verify Windows Environment
+      run: |
+        Write-Host "🪟 Windows Environment Information:"
+        Write-Host "📋 OS Info: $((Get-WmiObject Win32_OperatingSystem).Caption)"
+        Write-Host "🖥️ Architecture: $env:PROCESSOR_ARCHITECTURE"
+        Write-Host "☕ Java Version:"
+        java -version
+        Write-Host "📦 Maven Version:"
+        mvn --version
+        Write-Host "� Environment Variables:"
+        Write-Host "  JAVA_HOME: $env:JAVA_HOME"
+        Write-Host "  PATH: $env:PATH"
+      shell: pwsh
+        
+    - name: Compile Project (Native Windows)
+      run: |
+        Write-Host "🔨 Compiling project natively on Windows..."
+        mvn clean compile test-compile
+      shell: pwsh
+        
+    - name: Run Tests (Native Windows) 
+      run: |
+        Write-Host "🧪 Running tests natively on Windows..."
+        mvn test
+      shell: pwsh
+      continue-on-error: true
+      
+    - name: Generate Allure Report (Native Windows)
+      run: |
+        Write-Host "📊 Generating Allure report natively on Windows..."
+        mvn allure:report
+        Write-Host "✅ Native Windows execution completed!"
+      shell: pwsh
+      if: always()
+      continue-on-error: true
+      
+    - name: Verify Native Windows execution results
+      run: |
+        Write-Host "📁 Verifying native Windows execution results..."
+        Write-Host "🔍 Checking target directory structure..."
+        
+        if (Test-Path "target") {
+          Write-Host "✅ Target directory exists"
+          Get-ChildItem "target" | Format-Table Name, LastWriteTime
+          
+          if (Test-Path "target/surefire-reports") {
+            Write-Host "✅ Surefire reports generated"
+            $testFiles = Get-ChildItem "target/surefire-reports" -Filter "*.xml"
+            Write-Host "   Found $($testFiles.Count) test report files"
+          }
+          
+          if (Test-Path "target/allure-results") {
+            Write-Host "✅ Allure results generated"
+            $allureFiles = Get-ChildItem "target/allure-results"
+            Write-Host "   Found $($allureFiles.Count) allure result files"
+          }
+          
+          if (Test-Path "target/site/allure-maven-plugin/index.html") {
+            Write-Host "✅ Allure HTML report generated successfully"
+            $reportSize = (Get-Item "target/site/allure-maven-plugin/index.html").Length
+            Write-Host "   Report size: $reportSize bytes"
+          } else {
+            Write-Host "⚠️ Allure HTML report not found"
+          }
+        } else {
+          Write-Host "❌ Target directory not found - Windows execution may have failed"
+        }
+      shell: pwsh
+      if: always()
+      continue-on-error: true
+      
+    - name: Windows Environment Analysis
+      run: |
+        Write-Host "🔧 Windows Environment Analysis:"
+        Write-Host "📊 Disk Usage:"
+        Get-WmiObject -Class Win32_LogicalDisk | Format-Table DeviceID, Size, FreeSpace
+        Write-Host "💾 Memory Info:"
+        Get-WmiObject -Class Win32_ComputerSystem | Select-Object TotalPhysicalMemory
+        Write-Host "🔍 Process Info:"
+        Get-Process | Sort-Object CPU -Descending | Select-Object -First 10
+        if (Test-Path "target") {
+          Write-Host "✅ Target directory permissions OK (native Windows)"
+        } else {
+          Write-Host "⚠️ Target directory not found"
+        }
+      shell: pwsh
+      if: always()
+      continue-on-error: true
+      
+    - name: Publish Test Results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: TestNG Results
+        path: target/surefire-reports/TEST-*.xml
+        reporter: java-junit
+        fail-on-error: false
+        
+    - name: Upload test artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: windows-test-results
+        path: |
+          target/surefire-reports/
+          target/allure-results/
+          target/site/allure-maven-plugin/
+        retention-days: 30
+        
+    - name: Test Results Summary
+      if: always()
+      run: |
+        "## 📊 Test Results Summary" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        if (Test-Path "target/surefire-reports/testng-results.xml") {
+          "✅ TestNG results generated" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        }
+        if (Test-Path "target/allure-results") {
+          "✅ Allure results generated" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        }
+        if (Test-Path "target/site/allure-maven-plugin") {
+          "✅ Allure HTML report generated" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        }
+        "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        "📋 **Next Steps:**" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        "- Check artifacts for detailed reports" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        if ("${{ github.ref }}" -eq "refs/heads/main") {
+          "- Allure report will be deployed to GitHub Pages" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        }
+      shell: pwsh
+
+  deploy:
+    needs: test-native
+    runs-on: ubuntu-latest
+    name: Deploy Reports
+    if: github.ref == 'refs/heads/main' && always()
+    
+    steps:
+    - name: Download Allure report (Windows)
+      uses: actions/download-artifact@v4
+      with:
+        name: windows-test-results
+        path: test-results
+        
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: hashFiles('test-results/site/allure-maven-plugin/index.html') != ''
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: test-results/site/allure-maven-plugin
+        destination_dir: reports
+        
+    - name: Deploy Summary
+      if: always()
+      run: |
+        "## 🚀 Deploy Summary" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        if (Test-Path "test-results/site/allure-maven-plugin/index.html") {
+          "✅ Allure report deployed to GitHub Pages" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          "📊 **View Report:** https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/reports/" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        } else {
+          "❌ No Allure report found for deployment" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+          "🔍 **Debug info:** Check 'Debug artifact structure' step above" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+        }
+      shell: pwsh
