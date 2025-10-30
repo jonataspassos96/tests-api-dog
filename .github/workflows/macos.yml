@@ -32,8 +32,13 @@ jobs:
         
     - name: Setup Maven (macOS with Homebrew)
       run: |
-        echo "🍺 Installing Maven via Homebrew on macOS..."
-        brew install maven
+        echo "🍺 Setting up Maven via Homebrew on macOS..."
+        if brew list maven &>/dev/null; then
+          echo "✅ Maven already installed: $(mvn --version | head -1)"
+        else
+          echo "📥 Installing Maven via Homebrew..."
+          brew install maven
+        fi
         
     - name: Cache Maven dependencies  
       uses: actions/cache@v4
