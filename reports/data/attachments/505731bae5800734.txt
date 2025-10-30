@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Thu, 30 Oct 2025 00:05:03 GMT
+Content-Type=application/json
+Content-Length=114
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=WXiCsKpXS7fXMZsdDdeiMT4fdYCPKw3LDJpXxmDUyFMlyLprsDrcpMkmFj9hOZCWRo0ECjWZhcBgXEIClIYGMktwZYKT6Jk%3D"}]}
+CF-RAY=9966a8a519f1703c-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/retriever-curly\/n02099429_2767.jpg","status":"success"}
