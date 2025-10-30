@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Thu, 30 Oct 2025 00:58:59 GMT
+Content-Type=application/json
+Content-Length=110
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=wq7ejfh2DwrWGm4QrUosUwg9veswQuoTUcuIiizdmq1jlUgiM08l2p2%2BdOrV2I%2BHQAK4%2FVX3X40UpfNB2kzknUQ5aMcIvNM%3D"}]}
+CF-RAY=9966f7a68b04c96c-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/terrier-boston\/bostonTerrier_000002.jpg","status":"success"}

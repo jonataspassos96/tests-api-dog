@@ -1,0 +1,27 @@
+Status: 200
+
+Headers:
+Date=Thu, 30 Oct 2025 00:58:56 GMT
+Content-Type=application/json
+Content-Length=114
+Connection=keep-alive
+Server=cloudflare
+X-Powered-By=PHP/8.3.19
+Cache-Control=no-cache, private
+Access-Control-Allow-Origin=*
+Content-Encoding=gzip
+Via=1.1 varnish (Varnish/6.3), 1.1 varnish (Varnish/6.3)
+X-Cache-Hits=0
+X-Cache=MISS
+Accept-Ranges=bytes
+Age=0
+Vary=Accept-Encoding
+Nel={"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status=DYNAMIC
+Speculation-Rules="/cdn-cgi/speculation"
+Report-To={"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=zRAnYq0MRLa2oWO%2BW0RdPMESgHsy30Z3t1%2FIg%2FNGXm02gAgg4UUTxp4Ze8xsb%2FLK4MRnbTVows3WMZAYvvhdtIqA14FNaiM%3D"}]}
+CF-RAY=9966f7983a8fe5c7-IAD
+alt-svc=h3=":443"; ma=86400
+
+Body:
+{"message":"https:\/\/images.dog.ceo\/breeds\/pinscher-miniature\/n02107312_7528.jpg","status":"success"}
